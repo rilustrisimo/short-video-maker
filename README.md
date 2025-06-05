@@ -6,7 +6,7 @@ This project is meant to provide a free alternative to heavy GPU-power hungry vi
 
 The repository was open-sourced by the [AI Agents A-Z Youtube Channel](https://www.youtube.com/channel/UCloXqLhp_KGhHBe1kwaL2Tg). We encourage you to check out the channel for more AI-related content and tutorials.
 
-[Join our Skool community for premium automation workflows, exclusive servers](https://www.skool.com/ai-agents-az?s1)
+[Join our Skool community for premium automation workflows, exclusive servers](https://www.skool.com/ai-agents-az/about?s1)
 
 The server exposes an [MCP](https://github.com/modelcontextprotocol) and a REST server.
 
