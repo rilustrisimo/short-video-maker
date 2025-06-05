@@ -1,4 +1,4 @@
-## [📚 Join our Skool community for support, premium content and more!](https://www.skool.com/ai-agents-az/about?gw9)
+## [📚 Join our Skool community for support, premium content and more!](https://www.skool.com/ai-agents-az/about?s1m)
 
 ### Be part of a growing community and help us create more content like this
 
@@ -9,8 +9,6 @@ An open source automated video creation tool for generating short-form video con
 This project is meant to provide a free alternative to heavy GPU-power hungry video generation (and a free alternative to expensive, third-party API calls). It doesn't generate a video from scratch based on an image or an image prompt.
 
 The repository was open-sourced by the [AI Agents A-Z Youtube Channel](https://www.youtube.com/channel/UCloXqLhp_KGhHBe1kwaL2Tg). We encourage you to check out the channel for more AI-related content and tutorials.
-
-[Join our Skool community for premium automation workflows, exclusive servers](https://www.skool.com/ai-agents-az/about?s1)
 
 The server exposes an [MCP](https://github.com/modelcontextprotocol) and a REST server.
 
