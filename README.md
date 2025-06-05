@@ -1,3 +1,7 @@
+## [📚 Join our Skool community for support, premium content and more!](https://www.skool.com/ai-agents-az/about?gw9)
+
+### Be part of a growing community and help us create more content like this
+
 # Description
 
 An open source automated video creation tool for generating short-form video content. Short Video Maker combines text-to-speech, automatic captions, background videos, and music to create engaging short videos from simple text inputs.
