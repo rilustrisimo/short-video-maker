@@ -90,16 +90,9 @@ RUN node dist/scripts/install.js
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
-# Debug: List the contents to verify build worked
-RUN echo "=== Build verification ===" && \
-    ls -la /app/ && \
-    echo "=== Dist directory ===" && \
-    ls -la /app/dist/ && \
-    echo "=== End verification ==="
-
 # Set working directory and expose port
 WORKDIR /app
 EXPOSE 3123
 
-# Use exec form with explicit command
-CMD ["node", "dist/index.js"]
+# Use the start script
+CMD ["/bin/bash", "/app/start.sh"]
