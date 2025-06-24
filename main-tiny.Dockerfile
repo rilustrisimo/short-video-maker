@@ -53,7 +53,8 @@ ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 RUN corepack enable
 
 FROM base AS prod-deps
-COPY package.json pnpm-lock.yaml* /app/
+COPY docker-config/package.json /app/package.json
+COPY docker-config/pnpm-lock.yaml* /app/
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 RUN pnpm install --prefer-offline --no-cache --prod
 
@@ -70,7 +71,7 @@ COPY static /app/static
 COPY --from=install-whisper /whisper /app/data/libs/whisper
 COPY --from=prod-deps /app/node_modules /app/node_modules
 COPY --from=build /app/dist /app/dist
-COPY package.json /app/
+COPY docker-config/package.json /app/package.json
 
 # app configuration via environment variables
 ENV DATA_DIR_PATH=/app/data
@@ -89,9 +90,16 @@ RUN node dist/scripts/install.js
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
+# Debug: List the contents to verify build worked
+RUN echo "=== Build verification ===" && \
+    ls -la /app/ && \
+    echo "=== Dist directory ===" && \
+    ls -la /app/dist/ && \
+    echo "=== End verification ==="
+
 # Set working directory and expose port
 WORKDIR /app
 EXPOSE 3123
 
-# Use exec form and full path
-CMD ["/bin/bash", "/app/start.sh"]
+# Use exec form with explicit command
+CMD ["node", "dist/index.js"]

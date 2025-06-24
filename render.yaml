@@ -1,9 +1,10 @@
 services:
   - type: web
     name: short-video-maker
+    runtime: docker
     env: docker
     dockerfilePath: ./main-tiny.Dockerfile
-    dockerCommand: /app/start.sh
+    dockerCommand: /bin/bash /app/start.sh
     plan: free
     healthCheckPath: /health
     envVars:
