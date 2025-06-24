@@ -5,8 +5,8 @@ echo "Starting Short Video Maker MCP Server..."
 echo "Working directory: $(pwd)"
 echo "Contents: $(ls -la)"
 
-# Set default port
-export PORT=${PORT:-3123}
+# Set port - Render provides PORT environment variable
+export PORT=${PORT:-10000}
 echo "PORT set to: $PORT"
 
 # Check if dist/index.js exists
