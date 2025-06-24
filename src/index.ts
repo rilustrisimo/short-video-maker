@@ -85,7 +85,32 @@ async function main() {
   const server = new Server(config, shortCreator);
   const app = server.start();
 
-  // todo add shutdown handler
+  // Graceful shutdown handler for Render deployment
+  process.on("SIGTERM", () => {
+    logger.info("SIGTERM received, shutting down gracefully");
+    app.close(() => {
+      logger.info("Process terminated");
+      process.exit(0);
+    });
+  });
+
+  process.on("SIGINT", () => {
+    logger.info("SIGINT received, shutting down gracefully");
+    app.close(() => {
+      logger.info("Process terminated");
+      process.exit(0);
+    });
+  });
+
+  process.on("uncaughtException", (error) => {
+    logger.fatal(error, "Uncaught exception");
+    process.exit(1);
+  });
+
+  process.on("unhandledRejection", (reason, promise) => {
+    logger.fatal({ reason, promise }, "Unhandled rejection");
+    process.exit(1);
+  });
 }
 
 main().catch((error: unknown) => {

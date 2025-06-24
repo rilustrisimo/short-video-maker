@@ -29,4 +29,4 @@ services:
       - key: CONCURRENCY
         value: 1
       - key: VIDEO_CACHE_SIZE_IN_BYTES
-        value: 2097152000
+        value: 209715200
