@@ -3,6 +3,7 @@ services:
     name: short-video-maker
     env: docker
     dockerfilePath: ./main-tiny.Dockerfile
+    dockerCommand: /app/start.sh
     plan: free
     healthCheckPath: /health
     envVars:

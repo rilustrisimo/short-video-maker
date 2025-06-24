@@ -89,4 +89,9 @@ RUN node dist/scripts/install.js
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
-CMD ["/app/start.sh"]
+# Set working directory and expose port
+WORKDIR /app
+EXPOSE 3123
+
+# Use exec form and full path
+CMD ["/bin/bash", "/app/start.sh"]
