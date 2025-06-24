@@ -38,11 +38,12 @@ Instead of complex scene/config objects, use this simple format:
 - [Cloudinary Account](https://cloudinary.com/) (free tier: 25GB)
 - GitHub account
 
-### 2. Fork & Deploy
-1. Fork this repository
-2. Go to [Render Dashboard](https://dashboard.render.com)
-3. Create New Web Service → Connect GitHub repo
-4. Use these settings:
+### 2. Deploy Repository
+✅ **Repository Ready**: `https://github.com/rilustrisimo/short-video-maker`
+
+1. Go to [Render Dashboard](https://dashboard.render.com)
+2. Create New Web Service → Connect this GitHub repo
+3. Use these settings:
    - **Environment**: Docker
    - **Dockerfile**: `./main-tiny.Dockerfile`
    - **Plan**: Free

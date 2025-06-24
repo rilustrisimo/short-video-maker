@@ -43,22 +43,14 @@ git commit -m "Initial commit: Short Video Maker MCP Server"
 ```
 
 ### 2.2 Create GitHub Repository
-1. Go to [https://github.com](https://github.com)
-2. Click the "+" icon → "New repository"
-3. Repository settings:
-   - **Name**: `short-video-maker-mcp` (or your preferred name)
-   - **Description**: `MCP Server for generating short videos with Cloudinary hosting`
-   - **Visibility**: Public (recommended) or Private
-   - **Don't initialize** with README, .gitignore, or license (we already have them)
-4. Click "Create repository" ✅
+✅ **COMPLETED** - Repository created at: `https://github.com/rilustrisimo/short-video-maker`
 
 ### 2.3 Push to GitHub
-Replace `YOUR_USERNAME` with your actual GitHub username:
+✅ **COMPLETED** - Code has been pushed to the repository
 
 ```bash
-git remote add origin https://github.com/YOUR_USERNAME/short-video-maker-mcp.git
-git branch -M main
-git push -u origin main
+# Already completed - your code is now on GitHub!
+# Repository URL: https://github.com/rilustrisimo/short-video-maker
 ```
 
 ✅ **Checkpoint**: Your code should now be visible on GitHub!
@@ -76,7 +68,7 @@ git push -u origin main
 1. In Render Dashboard, click **"New +"** → **"Web Service"**
 2. Connect your repository:
    - Click **"Connect account"** if not already connected
-   - Find your `short-video-maker-mcp` repository
+   - Find your `short-video-maker` repository (rilustrisimo/short-video-maker)
    - Click **"Connect"** ✅
 
 ### 3.3 Configure Service Settings
@@ -98,10 +90,10 @@ Scroll down to **"Environment Variables"** and add these:
 
 | Key | Value | Notes |
 |-----|-------|--------|
-| `PEXELS_API_KEY` | `BWF3H1uaXh97hNVKi5aBduzi9XSOzZakG8tKwlJa0tvgQEV6U9uWUqyn` | Your Pexels key |
-| `CLOUDINARY_CLOUD_NAME` | `dlrp4olpd` | Your Cloudinary cloud name |
-| `CLOUDINARY_API_KEY` | `647372293282382` | Your Cloudinary API key |
-| `CLOUDINARY_API_SECRET` | `Q9fAHtxJIvjF0HMTS-oyGRdBvyM` | Your Cloudinary secret |
+| `PEXELS_API_KEY` | `YOUR_PEXELS_API_KEY_HERE` | From pexels.com/api |
+| `CLOUDINARY_CLOUD_NAME` | `YOUR_CLOUD_NAME_HERE` | From cloudinary dashboard |
+| `CLOUDINARY_API_KEY` | `YOUR_CLOUDINARY_API_KEY` | From cloudinary dashboard |
+| `CLOUDINARY_API_SECRET` | `YOUR_CLOUDINARY_SECRET` | From cloudinary dashboard |
 | `LOG_LEVEL` | `info` | Logging level |
 
 **How to add each variable:**
