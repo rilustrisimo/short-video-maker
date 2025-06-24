@@ -85,4 +85,8 @@ ENV VIDEO_CACHE_SIZE_IN_BYTES=2097152000
 # install kokoro, headless chrome and ensure music files are present
 RUN node dist/scripts/install.js
 
-CMD ["pnpm", "start"]
+# Copy and set up start script
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
+
+CMD ["/app/start.sh"]

@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: short-video-maker
+    env: docker
+    dockerfilePath: ./main-tiny.Dockerfile
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        sync: false
+      - key: PEXELS_API_KEY
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: LOG_LEVEL
+        value: info
+      - key: DATA_DIR_PATH
+        value: /app/data
+      - key: DOCKER
+        value: true
+      - key: WHISPER_MODEL
+        value: tiny.en
+      - key: KOKORO_MODEL_PRECISION
+        value: q4
+      - key: CONCURRENCY
+        value: 1
+      - key: VIDEO_CACHE_SIZE_IN_BYTES
+        value: 2097152000

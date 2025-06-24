@@ -11,6 +11,7 @@ import { Remotion } from "./libraries/Remotion";
 import { Whisper } from "./libraries/Whisper";
 import { FFMpeg } from "./libraries/FFmpeg";
 import { PexelsAPI } from "./libraries/Pexels";
+import { CloudinaryService } from "./libraries/CloudinaryService";
 import { Config } from "../config";
 import { logger } from "../logger";
 import { MusicManager } from "./music";
@@ -30,7 +31,7 @@ export class ShortCreator {
     config: RenderConfig;
     id: string;
   }[] = [];
-  constructor(
+  private cloudinaryService: CloudinaryService;constructor(
     private config: Config,
     private remotion: Remotion,
     private kokoro: Kokoro,
@@ -38,7 +39,9 @@ export class ShortCreator {
     private ffmpeg: FFMpeg,
     private pexelsApi: PexelsAPI,
     private musicManager: MusicManager,
-  ) {}
+  ) {
+    this.cloudinaryService = new CloudinaryService(config);
+  }
 
   public status(id: string): VideoStatus {
     const videoPath = this.getVideoPath(id);
@@ -191,9 +194,7 @@ export class ShortCreator {
     }
 
     const selectedMusic = this.findMusic(totalDuration, config.music);
-    logger.debug({ selectedMusic }, "Selected music for the video");
-
-    await this.remotion.render(
+    logger.debug({ selectedMusic }, "Selected music for the video");    await this.remotion.render(
       {
         music: selectedMusic,
         scenes,
@@ -210,6 +211,23 @@ export class ShortCreator {
       videoId,
       orientation,
     );
+
+    // Upload to Cloudinary if configured
+    if (this.cloudinaryService.isConfigured()) {
+      try {
+        const videoPath = this.getVideoPath(videoId);
+        const cloudinaryUrl = await this.cloudinaryService.uploadVideo(videoPath, videoId);
+        logger.info({ videoId, cloudinaryUrl }, 'Video uploaded to Cloudinary successfully');
+        
+        // Optionally delete the local file to save space on Render (free tier has limited storage)
+        if (this.config.runningInDocker) {
+          logger.info({ videoId }, 'Deleting local video file to save space');
+          fs.removeSync(videoPath);
+        }
+      } catch (error) {
+        logger.error({ error, videoId }, 'Failed to upload video to Cloudinary');
+      }
+    }
 
     for (const file of tempFiles) {
       fs.removeSync(file);

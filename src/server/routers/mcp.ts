@@ -47,23 +47,37 @@ export class MCPRouter {
           ],
         };
       },
-    );
-
-    this.mcpServer.tool(
+    );    this.mcpServer.tool(
       "create-short-video",
-      "Create a short video from a list of scenes",
+      "Create a short video from text and search terms. Returns video ID that will be uploaded to Cloudinary.",
       {
-        scenes: z.array(sceneInput).describe("Each scene to be created"),
-        config: renderConfig.describe("Configuration for rendering the video"),
+        text: z.string().describe("The text to be spoken in the video"),
+        search_terms: z.array(z.string()).describe("Keywords for finding relevant video footage"),
+        voice: z.string().optional().describe("Voice to use for text-to-speech (default: af_heart)"),
+        orientation: z.enum(["portrait", "landscape"]).optional().describe("Video orientation (default: portrait)"),
+        music_mood: z.string().optional().describe("Mood for background music"),
+        music_volume: z.number().min(0).max(1).optional().describe("Music volume (0-1, default: 0.3)"),
       },
-      async ({ scenes, config }) => {
+      async ({ text, search_terms, voice, orientation, music_mood, music_volume }) => {        // Convert simple input to the complex scene format
+        const scenes = [{
+          text,
+          searchTerms: search_terms,
+        }];
+        
+        const config = {
+          voice: voice as any || "af_heart",
+          orientation: orientation as any || "portrait",
+          music: music_mood as any,
+          musicVolume: music_volume as any || 0.3,
+        };
+        
         const videoId = await this.shortCreator.addToQueue(scenes, config);
 
         return {
           content: [
             {
               type: "text",
-              text: videoId,
+              text: `Video creation started! Video ID: ${videoId}. The video will be automatically uploaded to Cloudinary when ready.`,
             },
           ],
         };
@@ -72,6 +86,62 @@ export class MCPRouter {
   }
 
   private setupRoutes() {
+    // Simple HTTP POST endpoint for direct MCP calls
+    this.router.post("/", express.json(), async (req, res) => {
+      try {
+        const { tool, input } = req.body;        if (tool === "create-short-video") {
+          const { text, search_terms, voice, orientation, music_mood, music_volume, scenes, config } = input;
+          
+          let finalScenes, finalConfig;
+          
+          // Support both simple format (text + search_terms) and complex format (scenes + config)
+          if (text && search_terms) {
+            // Simple format
+            finalScenes = [{
+              text,
+              searchTerms: search_terms,
+            }];
+            finalConfig = {
+              voice: voice || "af_heart",
+              orientation: orientation || "portrait",
+              music: music_mood,
+              musicVolume: music_volume || 0.3,
+            };
+          } else if (scenes && config) {
+            // Complex format (backwards compatibility)
+            finalScenes = scenes;
+            finalConfig = config;
+          } else {
+            return res.status(400).json({ 
+              error: "Invalid input format. Provide either (text + search_terms) or (scenes + config)" 
+            });
+          }
+          
+          const videoId = await this.shortCreator.addToQueue(finalScenes, finalConfig as any);
+
+          res.json({
+            videoId,
+            status: "processing",
+            message:
+              "Video creation started. Video will be uploaded to Cloudinary when ready.",
+          });
+        } else if (tool === "get-video-status") {
+          const { videoId } = input;
+          const status = this.shortCreator.status(videoId);
+
+          res.json({
+            videoId,
+            status,
+          });
+        } else {
+          res.status(400).json({ error: "Unsupported tool" });
+        }
+      } catch (error) {
+        logger.error({ error }, "Error in MCP HTTP endpoint");
+        res.status(500).json({ error: "Internal server error" });
+      }
+    });
+
     this.router.get("/sse", async (req, res) => {
       logger.info("SSE GET request received");
 
