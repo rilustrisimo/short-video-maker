@@ -80,7 +80,7 @@ Fill in these **exact values**:
 | **Environment** | `Docker` |
 | **Region** | `Oregon (US West)` or closest to you |
 | **Branch** | `main` |
-| **Dockerfile Path** | `./main-tiny.Dockerfile` |
+| **Dockerfile Path** | `./Dockerfile` |
 | **Plan** | `Free` (or Starter for better performance) |
 
 ✅ **Important**: Make sure "Environment" is set to **Docker**!

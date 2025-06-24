@@ -45,7 +45,7 @@ Instead of complex scene/config objects, use this simple format:
 2. Create New Web Service → Connect this GitHub repo
 3. Use these settings:
    - **Environment**: Docker
-   - **Dockerfile**: `./main-tiny.Dockerfile`
+   - **Dockerfile**: `./Dockerfile`
    - **Plan**: Free
 
 ### 3. Environment Variables
